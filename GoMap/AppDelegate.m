@@ -7,6 +7,9 @@
 //
 
 #import "AppDelegate.h"
+#import "GoMapClient.h"
+#import "PGEncounter.h"
+#import "PGUtil.h"
 
 @interface AppDelegate ()
 
@@ -14,10 +17,31 @@
 
 @implementation AppDelegate
 
-
-- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    // Override point for customization after application launch.
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {    
+    UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:UIUserNotificationTypeAlert|UIUserNotificationTypeSound|UIUserNotificationTypeSound categories:nil];
+    [application registerUserNotificationSettings:settings];
+    [GoMapClient sharedInstance];
     return YES;
+}
+
+- (void)application:(UIApplication *)application didRegisterUserNotificationSettings:(UIUserNotificationSettings *)notificationSettings {
+    if (notificationSettings.types != UIUserNotificationTypeNone) {
+        [application registerForRemoteNotifications];
+    }
+}
+
+- (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
+    const char *data = [deviceToken bytes];
+    NSMutableString *token = [NSMutableString string];
+    for (NSUInteger i = 0; i < [deviceToken length]; i++) {
+        [token appendFormat:@"%02.2hhX", data[i]];
+    }
+    NSLog(@"%@", token);
+    [[GoMapClient sharedInstance] registerNotificationToken:token];
+}
+
+- (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error {
+    NSLog(@"Failed to register for remote notifications");
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {

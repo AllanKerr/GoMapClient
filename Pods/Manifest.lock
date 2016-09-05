@@ -1,0 +1,44 @@
+PODS:
+  - AFNetworking (3.1.0):
+    - AFNetworking/NSURLSession (= 3.1.0)
+    - AFNetworking/Reachability (= 3.1.0)
+    - AFNetworking/Security (= 3.1.0)
+    - AFNetworking/Serialization (= 3.1.0)
+    - AFNetworking/UIKit (= 3.1.0)
+  - AFNetworking/NSURLSession (3.1.0):
+    - AFNetworking/Reachability
+    - AFNetworking/Security
+    - AFNetworking/Serialization
+  - AFNetworking/Reachability (3.1.0)
+  - AFNetworking/Security (3.1.0)
+  - AFNetworking/Serialization (3.1.0)
+  - AFNetworking/UIKit (3.1.0):
+    - AFNetworking/NSURLSession
+  - DDURLParser (0.0.1)
+  - OpenSSL-Universal (1.0.1.19)
+  - XLForm (3.2.0)
+
+DEPENDENCIES:
+  - AFNetworking
+  - DDURLParser
+  - OpenSSL-Universal
+  - XLForm (from `https://github.com/xmartlabs/XLForm.git`)
+
+EXTERNAL SOURCES:
+  XLForm:
+    :git: https://github.com/xmartlabs/XLForm.git
+
+CHECKOUT OPTIONS:
+  XLForm:
+    :commit: 6879f01230e02e0c14da1f6eda263ce1b3eda215
+    :git: https://github.com/xmartlabs/XLForm.git
+
+SPEC CHECKSUMS:
+  AFNetworking: 5e0e199f73d8626b11e79750991f5d173d1f8b67
+  DDURLParser: 601d48518f3b8353df8ad419d1ec7bef6265e6b3
+  OpenSSL-Universal: 07489b0316f0f4f53c928e402e2ecbbedf96d93b
+  XLForm: 2250b4e96ab8ffa5f3355838c79edd90de451782
+
+PODFILE CHECKSUM: f6e5c60203d00bf3e9a00e76b502afd2d7c043b2
+
+COCOAPODS: 1.0.1
