@@ -8,12 +8,14 @@
 
 #import <Foundation/Foundation.h>
 #import "GetPlayerInfoResponse.pbobjc.h"
+#import "UpdateNotificationsRequest.pbobjc.h"
 #import "PGEncounter.h"
 #import "GSGlobalActivity.h"
 #import "GSGym.h"
 
 typedef void(^GSNameSearchCompletion)(NSArray *names, NSError *error);
 typedef void(^GSGetPlayerCompletion)(GetPlayerInfoResponse *response, NSError *error);
+typedef void(^GSUpdateSettingsCompletion)(NSError *error);
 
 @class GoMapClient;
 @protocol GoMapClientDelegate <NSObject>
@@ -37,6 +39,7 @@ typedef void(^GSGetPlayerCompletion)(GetPlayerInfoResponse *response, NSError *e
 + (instancetype)sharedInstance;
 - (void)searchForName:(NSString *)name completion:(GSNameSearchCompletion)completion;
 - (void)fetchPlayer:(NSString *)name completion:(GSGetPlayerCompletion)completion;
+- (void)updateNotificationSettingsWithRequest:(UpdateNotificationsRequest *)notificationsRequest completion:(GSUpdateSettingsCompletion)completion;
 - (void)registerNotificationToken:(NSString *)token;
 - (GSGym *)getGymWithID:(NSString *)gymID;
 @end

@@ -16,12 +16,14 @@ PODS:
     - AFNetworking/NSURLSession
   - DDURLParser (0.0.1)
   - OpenSSL-Universal (1.0.1.19)
+  - UICKeyChainStore (2.1.0)
   - XLForm (3.2.0)
 
 DEPENDENCIES:
   - AFNetworking
   - DDURLParser
   - OpenSSL-Universal
+  - UICKeyChainStore
   - XLForm (from `https://github.com/xmartlabs/XLForm.git`)
 
 EXTERNAL SOURCES:
@@ -37,8 +39,9 @@ SPEC CHECKSUMS:
   AFNetworking: 5e0e199f73d8626b11e79750991f5d173d1f8b67
   DDURLParser: 601d48518f3b8353df8ad419d1ec7bef6265e6b3
   OpenSSL-Universal: 07489b0316f0f4f53c928e402e2ecbbedf96d93b
+  UICKeyChainStore: f1cbd42216a113f0165de1e733e62905b8823432
   XLForm: 2250b4e96ab8ffa5f3355838c79edd90de451782
 
-PODFILE CHECKSUM: f6e5c60203d00bf3e9a00e76b502afd2d7c043b2
+PODFILE CHECKSUM: 4617d47d0bbdd9d6c866f14724fe1f1c04b4dde2
 
 COCOAPODS: 1.0.1

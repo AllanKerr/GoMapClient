@@ -9,6 +9,8 @@
 #import <Foundation/Foundation.h>
 #import "PokemonId.pbobjc.h"
 
+typedef void(^PGUpdateSettingsCompletion)(NSError *error);
+
 typedef NS_ENUM(NSUInteger, PokemonSettings) {
     PokemonSettingsDisabled,
     PokemonSettingsDefault,
@@ -25,5 +27,5 @@ typedef NS_ENUM(NSUInteger, PokemonSettings) {
 - (BOOL)requiresAlert:(PokemonId)pokemonId;
 - (BOOL)requiresVibration:(PokemonId)pokemonId;
 - (BOOL)requiresAlarm:(PokemonId)pokemonId;
-- (void)updateSettings:(PokemonSettings)settings forId:(PokemonId)pokemonId;
+- (void)updateSettings:(PokemonSettings)settings forId:(PokemonId)pokemonId completion:(PGUpdateSettingsCompletion)completion;
 @end

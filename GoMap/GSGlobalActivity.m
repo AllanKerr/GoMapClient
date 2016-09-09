@@ -30,7 +30,7 @@
         NSDate *date = [NSDate dateWithTimeIntervalSince1970:(activity.timestamp / 1000.0)];
         NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
         dateFormatter.timeStyle = NSDateFormatterShortStyle;
-        dateFormatter.dateStyle = NSDateFormatterMediumStyle;
+        dateFormatter.dateStyle = NSDateFormatterNoStyle;
         self.formattedTime = [dateFormatter stringFromDate:date];
     }
     return self;

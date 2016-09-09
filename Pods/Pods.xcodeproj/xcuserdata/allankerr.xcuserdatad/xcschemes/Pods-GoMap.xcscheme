@@ -14,7 +14,7 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = 'primary'
-               BlueprintIdentifier = '1412555E45D415135E79561A1658D4A6'
+               BlueprintIdentifier = 'EACDDACCC11784136DB61A60FDF20FF3'
                BlueprintName = 'Pods-GoMap'
                ReferencedContainer = 'container:Pods.xcodeproj'
                BuildableName = 'libPods-GoMap.a'>

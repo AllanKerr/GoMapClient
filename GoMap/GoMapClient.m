@@ -18,13 +18,13 @@
 #import "PGEncounter.h"
 #import "GSGlobalActivity.h"
 #import "RegisterTokenRequest.pbobjc.h"
-
-NSString *const GoMapBackupFilename = @"GoMapBackup.plist";
+#import "UICKeyChainStore.h"
 
 NSString *const GSDataProviderServer = @"http://159.203.44.63:9090";
 NSString *const GSClientSecret = @"2QDnZ7lbFZ7t6dkXAZoQLp4LBMRqg4Hf";
 
 @interface GoMapClient ()
+@property (readonly, nonatomic, strong) NSString *deviceIdentifier;
 @property (readwrite, nonatomic, strong) AFHTTPSessionManager *sessionManager;
 @property (readwrite, nonatomic, weak) NSTimer *timer;
 @property (readwrite, nonatomic, strong) NSMutableDictionary *gyms;
@@ -36,9 +36,20 @@ NSString *const GSClientSecret = @"2QDnZ7lbFZ7t6dkXAZoQLp4LBMRqg4Hf";
 
 @implementation GoMapClient
 @dynamic gymsArray;
+@dynamic deviceIdentifier;
 
 - (NSArray *)gymsArray {
     return [self.gyms allValues];
+}
+
+- (NSString *)deviceIdentifier {
+    UICKeyChainStore *keychain = [UICKeyChainStore keyChainStoreWithService:@"com.kerr.GoMap"];
+    NSString *identifier = [keychain stringForKey:@"UDID"];
+    if (identifier == nil) {
+        identifier =  [NSUUID UUID].UUIDString;
+        [keychain setString:identifier forKey:@"UDID"];
+    }
+    return identifier;
 }
 
 - (NSURL *)urlForEndPoint:(NSString *)endPoint {
@@ -104,7 +115,6 @@ NSString *const GSClientSecret = @"2QDnZ7lbFZ7t6dkXAZoQLp4LBMRqg4Hf";
             dispatch_async(dispatch_get_main_queue(), ^(void){
 
                 NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *) response;
-                self.isUpdatingData = NO;
                 if (httpResponse.statusCode != 200) {
                     NSError *parseError;
                     UpdateDataResponse *response = [UpdateDataResponse parseFromData:data error:&parseError];
@@ -141,6 +151,7 @@ NSString *const GSClientSecret = @"2QDnZ7lbFZ7t6dkXAZoQLp4LBMRqg4Hf";
                         NSLog(@"Data update parsing failed:%@", parseError);
                     }
                 }
+                self.isUpdatingData = NO;
             });
         }];
         [task resume];
@@ -234,13 +245,15 @@ NSString *const GSClientSecret = @"2QDnZ7lbFZ7t6dkXAZoQLp4LBMRqg4Hf";
     if (token.length == 0) {
         return;
     }
-    RegisterTokenRequest *searchRequest = [RegisterTokenRequest message];
-    searchRequest.token = token;
+    NSLog(@"%@", token);
+    RegisterTokenRequest *tokenRequest = [RegisterTokenRequest message];
+    tokenRequest.deviceIdentifier = self.deviceIdentifier;
+    tokenRequest.token = token;
     
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[self urlForEndPoint:@"register_token"]];
     [request setValue:GSClientSecret forHTTPHeaderField:@"User-Agent"];
     request.HTTPMethod = @"POST";
-    request.HTTPBody = searchRequest.data;
+    request.HTTPBody = tokenRequest.data;
     
     NSURLSession *session = [self.sessionManager session];
     NSURLSessionDataTask *task = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
@@ -250,6 +263,30 @@ NSString *const GSClientSecret = @"2QDnZ7lbFZ7t6dkXAZoQLp4LBMRqg4Hf";
         } else {
             NSLog(@"Registered for push notifications:%li", (long)httpResponse.statusCode);
         }
+    }];
+    [task resume];
+}
+
+- (void)updateNotificationSettingsWithRequest:(UpdateNotificationsRequest *)notificationsRequest completion:(GSUpdateSettingsCompletion)completion {
+
+    notificationsRequest.deviceIdentifier = self.deviceIdentifier;
+    
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[self urlForEndPoint:@"update_notifications"]];
+    [request setValue:GSClientSecret forHTTPHeaderField:@"User-Agent"];
+    request.HTTPMethod = @"POST";
+    request.HTTPBody = notificationsRequest.data;
+    
+    NSURLSession *session = [self.sessionManager session];
+    NSURLSessionDataTask *task = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+        dispatch_async(dispatch_get_main_queue(), ^(void){
+            NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *) response;
+            if (httpResponse.statusCode != 200) {
+                completion([NSError errorWithDomain:NSURLErrorDomain code:httpResponse.statusCode userInfo:nil]);
+                NSLog(@"Failed to update notification settings:%li", (long)httpResponse.statusCode);
+            } else {
+                completion(nil);
+            }
+        });
     }];
     [task resume];
 }

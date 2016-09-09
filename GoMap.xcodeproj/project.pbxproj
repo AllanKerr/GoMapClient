@@ -298,6 +298,9 @@
 		111E62EB1D7BE4340024493B /* GSRecentActivityViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 111E62E91D7BE4340024493B /* GSRecentActivityViewController.m */; };
 		111E62EE1D7CAFBB0024493B /* alarm.caf in Resources */ = {isa = PBXBuildFile; fileRef = 111E62ED1D7CAEB90024493B /* alarm.caf */; };
 		111E62F21D7CBBF00024493B /* RegisterTokenRequest.pbobjc.m in Sources */ = {isa = PBXBuildFile; fileRef = 111E62F11D7CBBF00024493B /* RegisterTokenRequest.pbobjc.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		113F1ADD1D7D65B9007208C6 /* NotificationSetting.pbobjc.m in Sources */ = {isa = PBXBuildFile; fileRef = 113F1AD81D7D65B9007208C6 /* NotificationSetting.pbobjc.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		113F1ADE1D7D65B9007208C6 /* NotificationType.pbobjc.m in Sources */ = {isa = PBXBuildFile; fileRef = 113F1ADA1D7D65B9007208C6 /* NotificationType.pbobjc.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		113F1ADF1D7D65B9007208C6 /* UpdateNotificationsRequest.pbobjc.m in Sources */ = {isa = PBXBuildFile; fileRef = 113F1ADC1D7D65B9007208C6 /* UpdateNotificationsRequest.pbobjc.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		115AF4741D7AAF3F00E8FDC2 /* GSPlayerSearchController.m in Sources */ = {isa = PBXBuildFile; fileRef = 115AF4731D7AAF3F00E8FDC2 /* GSPlayerSearchController.m */; };
 		115AF4771D7AB48F00E8FDC2 /* GSPlayerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 115AF4761D7AB48F00E8FDC2 /* GSPlayerViewController.m */; };
 		115AF47A1D7AB51100E8FDC2 /* PGUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 115AF4791D7AB51100E8FDC2 /* PGUtil.m */; };
@@ -908,6 +911,12 @@
 		111E62ED1D7CAEB90024493B /* alarm.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = alarm.caf; sourceTree = "<group>"; };
 		111E62F01D7CBBF00024493B /* RegisterTokenRequest.pbobjc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegisterTokenRequest.pbobjc.h; sourceTree = "<group>"; };
 		111E62F11D7CBBF00024493B /* RegisterTokenRequest.pbobjc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegisterTokenRequest.pbobjc.m; sourceTree = "<group>"; };
+		113F1AD71D7D65B9007208C6 /* NotificationSetting.pbobjc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NotificationSetting.pbobjc.h; sourceTree = "<group>"; };
+		113F1AD81D7D65B9007208C6 /* NotificationSetting.pbobjc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NotificationSetting.pbobjc.m; sourceTree = "<group>"; };
+		113F1AD91D7D65B9007208C6 /* NotificationType.pbobjc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NotificationType.pbobjc.h; sourceTree = "<group>"; };
+		113F1ADA1D7D65B9007208C6 /* NotificationType.pbobjc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NotificationType.pbobjc.m; sourceTree = "<group>"; };
+		113F1ADB1D7D65B9007208C6 /* UpdateNotificationsRequest.pbobjc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UpdateNotificationsRequest.pbobjc.h; sourceTree = "<group>"; };
+		113F1ADC1D7D65B9007208C6 /* UpdateNotificationsRequest.pbobjc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UpdateNotificationsRequest.pbobjc.m; sourceTree = "<group>"; };
 		115AF4721D7AAF3F00E8FDC2 /* GSPlayerSearchController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GSPlayerSearchController.h; sourceTree = "<group>"; };
 		115AF4731D7AAF3F00E8FDC2 /* GSPlayerSearchController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GSPlayerSearchController.m; sourceTree = "<group>"; };
 		115AF4751D7AB48F00E8FDC2 /* GSPlayerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GSPlayerViewController.h; sourceTree = "<group>"; };
@@ -1227,6 +1236,12 @@
 				111D04921D7AA3EA00F6C4C0 /* UpdateDataResponse.pbobjc.m */,
 				111E62F01D7CBBF00024493B /* RegisterTokenRequest.pbobjc.h */,
 				111E62F11D7CBBF00024493B /* RegisterTokenRequest.pbobjc.m */,
+				113F1AD71D7D65B9007208C6 /* NotificationSetting.pbobjc.h */,
+				113F1AD81D7D65B9007208C6 /* NotificationSetting.pbobjc.m */,
+				113F1AD91D7D65B9007208C6 /* NotificationType.pbobjc.h */,
+				113F1ADA1D7D65B9007208C6 /* NotificationType.pbobjc.m */,
+				113F1ADB1D7D65B9007208C6 /* UpdateNotificationsRequest.pbobjc.h */,
+				113F1ADC1D7D65B9007208C6 /* UpdateNotificationsRequest.pbobjc.m */,
 			);
 			path = GoMap;
 			sourceTree = "<group>";
@@ -2040,6 +2055,7 @@
 				111D07211D7AA3EB00F6C4C0 /* GetPlayerResponse.pbobjc.m in Sources */,
 				111D06A61D7AA3EB00F6C4C0 /* InventoryItem.pbobjc.m in Sources */,
 				111D06661D7AA3EB00F6C4C0 /* BattleParticipant.pbobjc.m in Sources */,
+				113F1ADD1D7D65B9007208C6 /* NotificationSetting.pbobjc.m in Sources */,
 				111D06E11D7AA3EB00F6C4C0 /* GetGymDetailsMessage.pbobjc.m in Sources */,
 				111D06E81D7AA3EB00F6C4C0 /* GetSuggestedCodenamesMessage.pbobjc.m in Sources */,
 				111D06AA1D7AA3EB00F6C4C0 /* InventoryUpgradeType.pbobjc.m in Sources */,
@@ -2166,6 +2182,7 @@
 				111D06C61D7AA3EB00F6C4C0 /* GetStoreItemsResponse.pbobjc.m in Sources */,
 				111D06A51D7AA3EB00F6C4C0 /* InventoryDelta.pbobjc.m in Sources */,
 				111D06FA1D7AA3EB00F6C4C0 /* UseItemEggIncubatorMessage.pbobjc.m in Sources */,
+				113F1ADF1D7D65B9007208C6 /* UpdateNotificationsRequest.pbobjc.m in Sources */,
 				111D06E71D7AA3EB00F6C4C0 /* GetPlayerProfileMessage.pbobjc.m in Sources */,
 				111D07711D7AA3EB00F6C4C0 /* GPBUnknownField.m in Sources */,
 				111D06961D7AA3EB00F6C4C0 /* GlobalActivityLog.pbobjc.m in Sources */,
@@ -2232,6 +2249,7 @@
 				111D06B81D7AA3EB00F6C4C0 /* MapPokemon.pbobjc.m in Sources */,
 				111D07101D7AA3EB00F6C4C0 /* EncounterResponse.pbobjc.m in Sources */,
 				111D06B31D7AA3EB00F6C4C0 /* FortSponsor.pbobjc.m in Sources */,
+				113F1ADE1D7D65B9007208C6 /* NotificationType.pbobjc.m in Sources */,
 				111D07401D7AA3EB00F6C4C0 /* MapSettings.pbobjc.m in Sources */,
 				111D07271D7AA3EB00F6C4C0 /* PlayerUpdateResponse.pbobjc.m in Sources */,
 				111D06A21D7AA3EB00F6C4C0 /* EggIncubator.pbobjc.m in Sources */,

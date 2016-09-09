@@ -10,6 +10,10 @@
 #import "PGPokemonSettings.h"
 #import "PGUtil.h"
 
+@interface PMPokemonSettingsController ()
+@property (nonatomic) BOOL updateFailed;
+@end
+
 @implementation PMPokemonSettingsController
 
 - (NSString *)nameForSettings:(PokemonSettings)settings {
@@ -68,9 +72,24 @@
 
 - (void)formRowDescriptorValueHasChanged:(XLFormRowDescriptor *)rowDescriptor oldValue:(id)oldValue newValue:(id)newValue {
     [super formRowDescriptorValueHasChanged:rowDescriptor oldValue:oldValue newValue:newValue];
-    PokemonId pokemondId = (PokemonId)[rowDescriptor.tag integerValue];
-    PokemonSettings settings = (PokemonSettings)[[rowDescriptor.value formValue] unsignedIntegerValue];
-    [[PGPokemonSettings sharedSettings] updateSettings:settings forId:pokemondId];
+    if (self.updateFailed) {
+        self.updateFailed = NO;
+    } else {
+        PokemonId pokemondId = (PokemonId)[rowDescriptor.tag integerValue];
+        PokemonSettings settings = (PokemonSettings)[[rowDescriptor.value formValue] unsignedIntegerValue];
+        [[PGPokemonSettings sharedSettings] updateSettings:settings forId:pokemondId completion:^(NSError *error){
+            if (error != nil) {
+                UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Update Failed" message:@"An error occurred while updating the settings. Please try again." preferredStyle:UIAlertControllerStyleAlert];
+                UIAlertAction *defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:nil];
+                [alert addAction:defaultAction];
+                [self presentViewController:alert animated:YES completion:nil];
+                
+                self.updateFailed = YES;
+                rowDescriptor.value = oldValue;
+                [self.tableView reloadData];
+            }
+        }];
+    }
 }
 
 - (void)done {

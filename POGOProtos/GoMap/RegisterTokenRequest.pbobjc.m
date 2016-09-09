@@ -44,10 +44,12 @@ static GPBFileDescriptor *RegisterTokenRequestRoot_FileDescriptor(void) {
 @implementation RegisterTokenRequest
 
 @dynamic token;
+@dynamic deviceIdentifier;
 
 typedef struct RegisterTokenRequest__storage_ {
   uint32_t _has_storage_[1];
   NSString *token;
+  NSString *deviceIdentifier;
 } RegisterTokenRequest__storage_;
 
 // This method is threadsafe because it is initially called
@@ -62,6 +64,15 @@ typedef struct RegisterTokenRequest__storage_ {
         .number = RegisterTokenRequest_FieldNumber_Token,
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(RegisterTokenRequest__storage_, token),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "deviceIdentifier",
+        .dataTypeSpecific.className = NULL,
+        .number = RegisterTokenRequest_FieldNumber_DeviceIdentifier,
+        .hasIndex = 1,
+        .offset = (uint32_t)offsetof(RegisterTokenRequest__storage_, deviceIdentifier),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeString,
       },

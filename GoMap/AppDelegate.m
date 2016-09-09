@@ -9,6 +9,7 @@
 #import "AppDelegate.h"
 #import "GoMapClient.h"
 #import "PGEncounter.h"
+#import "UICKeyChainStore.h"
 #import "PGUtil.h"
 
 @interface AppDelegate ()
@@ -17,7 +18,7 @@
 
 @implementation AppDelegate
 
-- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {    
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:UIUserNotificationTypeAlert|UIUserNotificationTypeSound|UIUserNotificationTypeSound categories:nil];
     [application registerUserNotificationSettings:settings];
     [GoMapClient sharedInstance];
@@ -36,7 +37,6 @@
     for (NSUInteger i = 0; i < [deviceToken length]; i++) {
         [token appendFormat:@"%02.2hhX", data[i]];
     }
-    NSLog(@"%@", token);
     [[GoMapClient sharedInstance] registerNotificationToken:token];
 }
 

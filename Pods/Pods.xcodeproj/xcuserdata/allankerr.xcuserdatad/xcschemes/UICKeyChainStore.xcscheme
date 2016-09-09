@@ -14,10 +14,10 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = 'primary'
-               BlueprintIdentifier = 'DAE7C36A79E91CFF664F02B6B1474B94'
-               BlueprintName = 'XLForm'
+               BlueprintIdentifier = 'E23442AC06772F93944ABAF55601A062'
+               BlueprintName = 'UICKeyChainStore'
                ReferencedContainer = 'container:Pods.xcodeproj'
-               BuildableName = 'libXLForm.a'>
+               BuildableName = 'libUICKeyChainStore.a'>
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>

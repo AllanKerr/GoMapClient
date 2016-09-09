@@ -7,6 +7,10 @@
 //
 
 #import "PGPokemonSettings.h"
+#import "NotificationSetting.pbobjc.h"
+#import "NotificationType.pbobjc.h"
+#import "UpdateNotificationsRequest.pbobjc.h"
+#import "GoMapClient.h"
 
 NSString *const PMPokemonSettingsKey = @"pokemonSettings";
 
@@ -344,17 +348,44 @@ NSString *const PMPokemonSettingsKey = @"pokemonSettings";
             self.pokemonSettings = [self defaultPokemonSettings];
             [userDefaults setValue:self.pokemonSettings forKey:PMPokemonSettingsKey];
         }
+        [self performInitialSetup];
     }
     return self;
 }
 
+- (void)performInitialSetup {
+    BOOL initialSetupComplete = [[NSUserDefaults standardUserDefaults] boolForKey:@"initialSetupComplete"];
+    if (initialSetupComplete) {
+        NSLog(@"INITIAL SETUP ALREADY DONE");
+        return;
+    }
+    UpdateNotificationsRequest *request = [UpdateNotificationsRequest message];
+    for (PokemonId pokemonId = PokemonId_Bulbasaur; pokemonId <= PokemonId_Mew; pokemonId++) {
+        PokemonSettings settings;
+        if ([self requiresVibration:pokemonId]) {
+            settings = PokemonSettingsAlertAndVibrate;
+        } else {
+            settings = PokemonSettingsSearch;
+        }
+        NotificationSetting *notificationSettings = [self notificationSettingsForPokemonId:pokemonId settings:settings];
+        [request.settingsArray addObject:notificationSettings];
+    }
+    [[GoMapClient sharedInstance] updateNotificationSettingsWithRequest:request completion:^(NSError *error){
+        if (error == nil) {
+            [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"initialSetupComplete"];
+        } else {
+            NSLog(@"Initial setup failed.");
+        }
+    }];
+}
+
 - (NSMutableDictionary *)defaultPokemonSettings {
-    NSMutableDictionary *defaultDesiredPokemon = [NSMutableDictionary dictionaryWithCapacity:(PokemonId_Mew - PokemonId_Missingno) + 1];
-    for (PokemonId pokemonId = PokemonId_Missingno; pokemonId <= PokemonId_Mew; pokemonId++) {
+    NSMutableDictionary *defaultDesiredPokemon = [NSMutableDictionary dictionaryWithCapacity:(PokemonId_Mew - PokemonId_Bulbasaur) + 1];
+    for (PokemonId pokemonId = PokemonId_Bulbasaur; pokemonId <= PokemonId_Mew; pokemonId++) {
         NSString *identifier = [NSString stringWithFormat:@"%i",(int)pokemonId];
         PokemonSettings settings = [self defaultPokemonSettingsForId:pokemonId];
         [defaultDesiredPokemon setValue:@(settings) forKey:identifier];
-    }
+    }    
     return defaultDesiredPokemon;
 }
 
@@ -382,10 +413,32 @@ NSString *const PMPokemonSettingsKey = @"pokemonSettings";
     return [self settingsForId:pokemonId] == PokemonSettingsAlarm;
 }
 
-- (void)updateSettings:(PokemonSettings)settings forId:(PokemonId)pokemonId {
-    NSString *identifier = [NSString stringWithFormat:@"%i",(int)pokemonId];
-    [self.pokemonSettings setValue:@(settings) forKey:identifier];
-    [[NSUserDefaults standardUserDefaults] setValue:self.pokemonSettings forKey:PMPokemonSettingsKey];
+- (void)updateSettings:(PokemonSettings)settings forId:(PokemonId)pokemonId completion:(PGUpdateSettingsCompletion)completion {    
+    UpdateNotificationsRequest *request = [UpdateNotificationsRequest message];
+    NotificationSetting *notificationSettings = [self notificationSettingsForPokemonId:pokemonId settings:settings];
+    [request.settingsArray addObject:notificationSettings];
+    
+    [[GoMapClient sharedInstance] updateNotificationSettingsWithRequest:request completion:^(NSError *error){
+        if (error == nil) {
+            NSString *identifier = [NSString stringWithFormat:@"%i",(int)pokemonId];
+            [self.pokemonSettings setValue:@(settings) forKey:identifier];
+            [[NSUserDefaults standardUserDefaults] setValue:self.pokemonSettings forKey:PMPokemonSettingsKey];
+        }
+        completion(error);
+    }];
+}
+
+- (NotificationSetting *)notificationSettingsForPokemonId:(PokemonId)pokemonId settings:(PokemonSettings)settings {
+    NotificationSetting *notificationSettings = [NotificationSetting message];
+    notificationSettings.pokemonId = pokemonId;
+    if (settings == PokemonSettingsAlertAndVibrate) {
+        notificationSettings.notificationType = NotificationType_Vibrate;
+    } else if (settings == PokemonSettingsAlarm) {
+        notificationSettings.notificationType = NotificationType_Alarm;
+    } else {
+        notificationSettings.notificationType = NotificationType_None;
+    }
+    return notificationSettings;
 }
 
 @end
